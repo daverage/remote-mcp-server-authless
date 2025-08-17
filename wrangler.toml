@@ -1,0 +1,41 @@
+name = "rag-blog-mcp-server"
+main = "src/worker.js"
+compatibility_date = "2024-01-15"
+node_compat = true
+
+[env.production]
+name = "rag-blog-mcp-server-prod"
+
+[env.staging]
+name = "rag-blog-mcp-server-staging"
+
+# Environment variables for API keys (set via wrangler secret)
+# wrangler secret put AIzaSyCw_O4ASMGqJn2ae1ZZDVCQl7PAYeP3Q3s
+# wrangler secret put d7ee5c86292a8498b
+
+# KV namespace for caching search results
+[[kv_namespaces]]
+binding = "SEARCH_CACHE"
+preview_id = "preview_search_cache"
+id = "production_search_cache"
+
+# Durable Objects for session management (if needed)
+# [[durable_objects.bindings]]
+# name = "SESSION_MANAGER"
+# class_name = "SessionManager"
+
+# Custom domains (configure after deployment)
+# [env.production.routes]
+# pattern = "mcp.yourdomain.com/*"
+# zone_name = "yourdomain.com"
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Limits and performance
+[limits]
+cpu_ms = 50000
+
+# Compatibility flags
+compatibility_flags = ["nodejs_compat"]

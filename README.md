@@ -1,50 +1,51 @@
-# Building a Remote MCP Server on Cloudflare (Without Auth)
+# MCP Server - Cloudflare Workers Deployment
 
-This example allows you to deploy a remote MCP server that doesn't require authentication on Cloudflare Workers. 
+This directory contains the built MCP server ready for deployment to Cloudflare Workers.
 
-## Get started: 
+## Files
 
-[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
+- `index.js` - Main worker script (entry point)
+- `embedded-data.js` - Embedded RAG data (55219257 bytes)
+- `package.json` - Dependencies for deployment
 
-This will deploy your MCP server to a URL like: `remote-mcp-server-authless.<your-account>.workers.dev/sse`
+## Deployment
 
-Alternatively, you can use the command line below to get the remote MCP Server created on your local machine:
+1. Install Wrangler CLI:
+   ```bash
+   npm install -g wrangler
+   ```
+
+2. Login to Cloudflare:
+   ```bash
+   wrangler login
+   ```
+
+3. Deploy the worker:
+   ```bash
+   wrangler deploy
+   ```
+
+## Environment Variables
+
+Set these in your Cloudflare Workers dashboard or via wrangler:
+
+- `SEARCH_API_KEY` - Google Custom Search API key
+- `CUSTOM_SEARCH_ENGINE_ID` - Google Custom Search Engine ID
+
+## MCP Tools Available
+
+1. `search_rag_knowledge` - Search embedded RAG data
+2. `search_internet` - General internet search
+3. `search_gamified_sites` - Search gamified.uk and marczewski.me.uk
+4. `get_writing_style` - Get writing style guidelines
+5. `scrape_gamified_content` - Scrape content from allowed domains
+
+## Testing
+
+Test the deployed worker:
+
 ```bash
-npm create cloudflare@latest -- my-mcp-server --template=cloudflare/ai/demos/remote-mcp-authless
+curl https://your-worker.your-subdomain.workers.dev/
 ```
 
-## Customizing your MCP Server
-
-To add your own [tools](https://developers.cloudflare.com/agents/model-context-protocol/tools/) to the MCP server, define each tool inside the `init()` method of `src/index.ts` using `this.server.tool(...)`. 
-
-## Connect to Cloudflare AI Playground
-
-You can connect to your MCP server from the Cloudflare AI Playground, which is a remote MCP client:
-
-1. Go to https://playground.ai.cloudflare.com/
-2. Enter your deployed MCP server URL (`remote-mcp-server-authless.<your-account>.workers.dev/sse`)
-3. You can now use your MCP tools directly from the playground!
-
-## Connect Claude Desktop to your MCP server
-
-You can also connect to your remote MCP server from local MCP clients, by using the [mcp-remote proxy](https://www.npmjs.com/package/mcp-remote). 
-
-To connect to your MCP server from Claude Desktop, follow [Anthropic's Quickstart](https://modelcontextprotocol.io/quickstart/user) and within Claude Desktop go to Settings > Developer > Edit Config.
-
-Update with this configuration:
-
-```json
-{
-  "mcpServers": {
-    "calculator": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "http://localhost:8787/sse"  // or remote-mcp-server-authless.your-account.workers.dev/sse
-      ]
-    }
-  }
-}
-```
-
-Restart Claude and you should see the tools become available. 
+Built on: 2025-08-17T17:15:03.533Z

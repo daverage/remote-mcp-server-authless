@@ -1,24 +1,13 @@
 {
-	"name": "remote-mcp-server-authless",
-	"version": "0.0.0",
-	"private": true,
-	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"format": "biome format --write",
-		"lint:fix": "biome lint --fix",
-		"start": "wrangler dev",
-		"cf-typegen": "wrangler types",
-		"type-check": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@modelcontextprotocol/sdk": "1.17.1",
-		"agents": "^0.0.109",
-		"zod": "^3.25.67"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.1.3",
-		"typescript": "5.8.3",
-		"wrangler": "^4.27.0"
-	}
+  "name": "rag-blog-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for RAG Blog Assistant with internet search capabilities",
+  "main": "index.js",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0-rc.12",
+    "fuse.js": "^7.0.0"
+  },
+  "type": "module"
 }
